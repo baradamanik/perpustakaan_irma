@@ -8,7 +8,7 @@
                     <h3>Buku</h3>
                 </div>
                 <div class="col-4 text-right">
-                <button class="btn btn-sm text-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i>Delete</button>
+                <button class="btn btn-sm text-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></button>
                     <!-- Tambahkan konten di sini sesuai kebutuhan -->
                 </div>
             </div>
@@ -52,7 +52,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Description</label>
-                            <textarea name="description" class="form-control @error('description') {{'is-invalid'}} @enderror">{{old('description') ?? $movie->description ?? ''}}</textarea>
+                            <textarea name="description" class="form-control @error('description') {{'is-invalid'}} @enderror">{{old('description') ?? $buku->description ?? ''}}</textarea>
                             @error('description')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

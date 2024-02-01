@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Buku;
+use App\Models\Bukubuku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -15,20 +15,20 @@ class BukuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, Buku $books)
+    public function index(Request $request, Bukubuku $bukubuku)
     {
         $q = $request->input('q');
 
-        $active = 'Books';
+        $active = 'Buku';
 
-        $books = $books->when($q, function($query) use ($q) {
+        $bukubuku = $bukubuku->when($q, function($query) use ($q) {
                 return $query->where('title', 'like', '%' .$q. '%')
                              ->orwhere('description', 'like', '%' .$q. '%');
             })
 
         ->paginate(10);
         return view('dashboard/buku/list', [
-            'books' => $books,
+            'bukubuku' => $bukubuku,
             'request' => $request,
             'active' => $active
         ]);
@@ -41,7 +41,7 @@ class BukuController extends Controller
      */
     public function create()
     {
-        $active = 'Books';
+        $active = 'Buku';
         return view('dashboard/buku/form', [
             'active' => $active,
             'button' =>'Create',
@@ -58,7 +58,7 @@ class BukuController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'title'         => 'required|unique:App\Models\Buku,title',
+            'title'         => 'required|unique:App\Models\Bukubuku,title',
             'description'   => 'required',
             'thumbnail'     => 'required|image',
             'penulis'       => 'required',
@@ -72,18 +72,18 @@ class BukuController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         } else {
-            $buku = new Buku(); //Tambahkan ini untuk membuat objek Buku
+            $bukubuku = new Bukubuku(); //Tambahkan ini untuk membuat objek Buku
             $image = $request->file('thumbnail');
             $filename = time() . '.' .$image->getClientOriginalExtension();
             Storage::disk('local')->putFileAs('public/buku', $image, $filename);
 
-            $buku->title = $request->input('title');
-            $buku->description = $request->input('description');
-            $buku->thumbnail = $filename; //Ganti dengan nama file yang baru diupload
-            $buku->penulis = $request->input('penulis');
-            $buku->penerbit = $request->input('penerbit');
-            $buku->tahun_terbit = $request->input('tahun_terbit');
-            $buku->save();
+            $bukubuku->title = $request->input('title');
+            $bukubuku->description = $request->input('description');
+            $bukubuku->thumbnail = $filename; //Ganti dengan nama file yang baru diupload
+            $bukubuku->penulis = $request->input('penulis');
+            $bukubuku->penerbit = $request->input('penerbit');
+            $bukubuku->tahun_terbit = $request->input('tahun_terbit');
+            $bukubuku->save();
 
             return redirect()->route('dashboard.books');
         }
@@ -92,10 +92,10 @@ class BukuController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Buku  $buku
+     * @param  \App\Models\Bukubuku  $bukubuku
      * @return \Illuminate\Http\Response
      */
-    public function show(Buku $buku)
+    public function show(Bukubuku $bukubuku)
     {
         //
     }
@@ -103,16 +103,16 @@ class BukuController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Buku  $buku
+     * @param  \App\Models\Bukubuku  $bukubuku
      * @return \Illuminate\Http\Response
      */
-    public function edit(Buku $buku)
+    public function edit(Bukubuku $bukubuku)
     {
         //
-        $active = 'Books';
+        $active = 'Buku';
         return view('dashboard/buku/form', [
             'active' => $active,
-            'buku'   => $buku,
+            'buku'   => $bukubuku,
             'button' =>'Update',        
             'url'    =>'dashboard.books.update'
         ]);
@@ -122,14 +122,14 @@ class BukuController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Buku  $buku
+     * @param  \App\Models\Bukubuku  $bukubuku
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buku $buku)
+    public function update(Request $request, Bukubuku $bukubuku)
     {
         //
         $validator = Validator::make($request->all(), [
-            'title'         => 'required|unique:App\Models\Buku,title,'.$buku->bukuid,
+            'title'         => 'required|unique:App\Models\Bukubuku,title,'.$bukubuku->bukuid,
             'description'   => 'required',
             'thumbnail'     => 'image',
             'penulis'       => 'required',
@@ -139,7 +139,7 @@ class BukuController extends Controller
 
         if ($validator->fails()) {
             return redirect()
-                ->route('dashboard.books.update', $buku->bukuid)
+                ->route('dashboard.books.update', $bukubuku->bukuid)
                 ->withErrors($validator)
                 ->withInput();
         } else {
@@ -148,14 +148,14 @@ class BukuController extends Controller
                 $image = $request->file('thumbnail');
                 $filename = time() . '.' . $image->getClientOriginalExtension();
                     Storage::disk('local')->putFileAs('public/buku', $image, $filename);
-                $buku->thumbnail = $filename; //Ganti dengan nama file yang baru diupload
+                $bukubuku->thumbnail = $filename; //Ganti dengan nama file yang baru diupload
             }
-            $buku->title = $request->input('title');
-            $buku->description = $request->input('description');
-            $buku->penulis = $request->input('penulis');
-            $buku->penerbit = $request->input('penerbit');
-            $buku->tahun_terbit = $request->input('tahun_terbit');
-            $buku->save();
+            $bukubuku->title = $request->input('title');
+            $bukubuku->description = $request->input('description');
+            $bukubuku->penulis = $request->input('penulis');
+            $bukubuku->penerbit = $request->input('penerbit');
+            $bukubuku->tahun_terbit = $request->input('tahun_terbit');
+            $bukubuku->save();
 
             return redirect()->route('dashboard.books');
         }
@@ -164,10 +164,10 @@ class BukuController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Buku  $buku
+     * @param  \App\Models\Bukubuku  $bukubuku
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buku $buku)
+    public function destroy(bukubuku $bukubuku)
     {
         //
         $buku->delete();

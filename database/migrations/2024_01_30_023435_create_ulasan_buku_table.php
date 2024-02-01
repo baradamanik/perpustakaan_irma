@@ -25,7 +25,7 @@ return new class extends Migration
             $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
 
             //Menambahkan foreign key ke table 'buku'
-            $table->foreign('bukuid')->references('bukuid')->on('bukus')->onDelete('cascade');
+            $table->foreign('bukuid')->references('bukuid')->on('bukubuku')->onDelete('cascade');
         });
     }
 

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             //Menambahkan foreign key ke table 'buku'
-            $table->foreign('bukuid')->references('bukuid')->on('bukus')->onDelete('cascade');
+            $table->foreign('bukuid')->references('bukuid')->on('bukubuku')->onDelete('cascade');
 
             //Menambahkan foreign key ke table 'kategoribuku'
             $table->foreign('kategoriid')->references('kategoriid')->on('kategoribuku')->onDelete('cascade');

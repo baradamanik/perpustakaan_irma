@@ -25,7 +25,7 @@
         </div>
 
         <div class="card-body p-0">
-            @if($books->total())
+            @if($bukubuku->total())
                 <table class="table table-bordered table-striped table-hover">
                     <thead>    
                         <tr>
@@ -36,9 +36,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($books as $buku)
+                        @foreach ($bukubuku as $buku)
                             <tr>
-                                <!--<th>{{ ($books->currentPage() -1 ) * $books->perPage() + $loop->iteration }}</th>-->
+                                <!--<th>{{ ($bukubuku->currentPage() -1 ) * $bukubuku->perPage() + $loop->iteration }}</th>-->
                                 <td class="col-thumbnail">
                                     <img src="{{asset('storage/buku/'.$buku->thumbnail)}}" class="img-fluid">
                                 </td>
@@ -50,7 +50,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $books->links() }}
+                {{ $bukubuku->links() }}
             @else
                 <h5 class="text-center p-3">Belum ada data Buku</h5>
             @endif
