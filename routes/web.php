@@ -47,9 +47,12 @@ Route::get('/dashboard/books/edit/{bukubuku}', [App\Http\Controllers\dashboard\B
 Route::put('/dashboard/books/edit/{bukubuku}', [App\Http\Controllers\dashboard\BukuController::class, 'update'])->name('dashboard.books.update');
 Route::post('/dashboard/books', [App\Http\Controllers\dashboard\BukuController::class, 'store'])->name('dashboard.books.store');
 Route::delete('/dashboard/books/{bukubuku}', [App\Http\Controllers\dashboard\BukuController::class, 'destroy'])->name('dashboard.books.delete');
+<<<<<<< HEAD
 
 //baca
 Route::get('/dashboard/books/{buku}/baca', 'App\Http\Controllers\dashboard\BukuController@baca')->name('dashboard.books.baca');
+=======
+>>>>>>> cea9d2771a067ae9c871a6cd738fcb8daaa1cc9b
 
 //movie
 Route::get('/dashboard/movies', [App\Http\Controllers\dashboard\MovieController::class, 'index'])->name('dashboard.movies');

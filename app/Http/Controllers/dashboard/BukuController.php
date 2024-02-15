@@ -78,13 +78,18 @@ class BukuController extends Controller
             $image = $request->file('thumbnail');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             Storage::disk('local')->putFileAs('public/buku', $image, $filename);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> cea9d2771a067ae9c871a6cd738fcb8daaa1cc9b
             $bukubuku->title = $request->input('title');
             $bukubuku->description = $request->input('description');
             $bukubuku->thumbnail = $filename; //Ganti dengan nama file yang baru diupload
             $bukubuku->penulis = $request->input('penulis');
             $bukubuku->penerbit = $request->input('penerbit');
             $bukubuku->tahun_terbit = $request->input('tahun_terbit');
+<<<<<<< HEAD
     
             $pdf = $request->file('pdf');
             $pdfFileName = time() . '.' . $pdf->getClientOriginalExtension();
@@ -97,6 +102,11 @@ class BukuController extends Controller
             return redirect()
                 ->route('dashboard.books')
                 ->with('message', __('message.store', ['title'=>$request->input('title')]));
+=======
+            $bukubuku->save();
+
+            return redirect()->route('dashboard.books');
+>>>>>>> cea9d2771a067ae9c871a6cd738fcb8daaa1cc9b
         }
     }
     
