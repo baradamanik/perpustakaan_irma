@@ -39,11 +39,11 @@ class Menu extends Component
                 'route' => 'dashboard',
                 'icon'  => 'fa-solid fa-house-chimney'
             ],
-            [
-                'label' => 'Movie',
-                'route' => 'dashboard.movies',
-                'icon'  => 'fa-solid fa-users-viewfinder'
-            ],
+            //[
+              //  'label' => 'Movie',
+                //'route' => 'dashboard.movies',
+                //'icon'  => 'fa-solid fa-users-viewfinder'
+            //],
             [
                 'label' => 'Buku',
                 'route' => 'dashboard.books',

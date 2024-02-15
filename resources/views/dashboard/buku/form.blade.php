@@ -65,7 +65,7 @@
                         <div class="form-group mt-3">
                             <div class="custom-file">
                                 <input type="file" name="thumbnail" class="custom-file-input">
-                                    <label for="thumbnail" class="custom-file-label">Tambah Gambar</label><br>*Jika tidak ingin merubah gambar kosongkan saja
+                                    <label for="thumbnail" class="custom-file-label">Tambah Gambar</label><br><br>*Jika tidak ingin merubah gambar kosongkan saja
                                     @error('thumbnail')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -75,7 +75,7 @@
                         <div class="form-group mt-3">
                             <div class="custom-file">
                                 <input type="file" name="pdf" class="custom-file-input">
-                                <label for="pdf" class="custom-file-label">Tambah PDF</label><br>*Jika tidak ingin merubah pdf kosongkan saja
+                                <label for="pdf" class="custom-file-label">Tambah PDF</label><br><br>*Jika tidak ingin merubah pdf kosongkan saja
                                 @error('pdf')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror

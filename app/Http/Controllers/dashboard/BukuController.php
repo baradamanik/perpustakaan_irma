@@ -62,15 +62,12 @@ class BukuController extends Controller
             'title'         => 'required|unique:App\Models\Bukubuku,title',
             'description'   => 'required',
             'thumbnail'     => 'required|image',
-            'pdf'           => 'mimes:pdf', // Hanya izinkan file dengan ekstensi .pdf
+            'pdf'           => 'required|mimes:pdf', // Hanya izinkan file dengan ekstensi .pdf dan wajib diunggah
             'penulis'       => 'required',
             'penerbit'      => 'required',
             'tahun_terbit'  => 'required',
         ]);
-        //$validator = Validator::make($request->all(), [
-            //'thumbnail'   => 'mimes:doc,pdf,docx,png,jpeg,jpg'
-        //]);
-
+    
         if ($validator->fails()) {
             return redirect()
                 ->route('dashboard.books.create')
@@ -79,32 +76,30 @@ class BukuController extends Controller
         } else {
             $bukubuku = new Bukubuku(); //Tambahkan ini untuk membuat objek Buku
             $image = $request->file('thumbnail');
-            $filename = time() . '.' .$image->getClientOriginalExtension();
+            $filename = time() . '.' . $image->getClientOriginalExtension();
             Storage::disk('local')->putFileAs('public/buku', $image, $filename);
-
+    
             $bukubuku->title = $request->input('title');
             $bukubuku->description = $request->input('description');
             $bukubuku->thumbnail = $filename; //Ganti dengan nama file yang baru diupload
             $bukubuku->penulis = $request->input('penulis');
             $bukubuku->penerbit = $request->input('penerbit');
             $bukubuku->tahun_terbit = $request->input('tahun_terbit');
-            $bukubuku->save();
-
-            return redirect()
-                        ->route('dashboard.books')
-                        ->with('message', __('message.store', ['title'=>$request->input('title')]));
-        }
-
-        $pdf = $request->file('pdf');
-        $pdfFileName = null;
-
-        if ($pdf) {
+    
+            $pdf = $request->file('pdf');
             $pdfFileName = time() . '.' . $pdf->getClientOriginalExtension();
             Storage::disk('local')->putFileAs('public/pdf', $pdf, $pdfFileName);
+    
+            $bukubuku->pdf = $pdfFileName; // Simpan nama file PDF ke dalam atribut 'pdf'
+            
+            $bukubuku->save();
+    
+            return redirect()
+                ->route('dashboard.books')
+                ->with('message', __('message.store', ['title'=>$request->input('title')]));
         }
-
-        $bukubuku->pdf = $pdfFileName;
     }
+    
 
     /**
      * Display the specified resource.

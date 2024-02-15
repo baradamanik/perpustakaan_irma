@@ -53,7 +53,12 @@
                                     <td><a href="{{ route('dashboard.books.baca', $buku->bukuid) }}" class="btn btn-success btn-sm" target="_blank">Baca</a></td>
                                 </td>
                                 <td>
-                                    <h4><strong>{{ $buku->title }}</strong></h4>
+                                    <h4><strong>{{ $buku->title }}</strong></h4>------------------------------
+                                    <br>Penulis     : {{ $buku->penulis }}
+                                    <br>Tahun terbit: {{ $buku->tahun_terbit }}
+                                    <br>Penerbit    : {{ $buku->penulis }}
+                                    <br>Sinopsis    : {{ $buku->description }}
+
                                 </td>
                                 <td><a href="{{ route('dashboard.books.edit', $buku->bukuid) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a></td>
                                 <!--<a href="{{ asset('storage/admission-document-uploads/' . $bukubuku)}}" target="_blank"> Baca </a>;-->
