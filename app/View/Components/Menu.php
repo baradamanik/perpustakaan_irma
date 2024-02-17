@@ -50,6 +50,11 @@ class Menu extends Component
                 'icon'  => 'fa-solid fa-book-bookmark'
             ],
             [
+                'label' => 'KategoriBuku',
+                'route' => 'dashboard.kategoribuku',
+                'icon'  => 'fa-solid fa-book-bookmark'
+            ],
+            [
                 'label' => 'Peminjaman',
                 'route' => 'dashboard.peminjaman',
                 'icon'  => 'fa-solid fa-handshake-simple'
