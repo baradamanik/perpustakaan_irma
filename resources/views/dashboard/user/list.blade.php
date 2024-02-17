@@ -22,7 +22,7 @@
         </div>
 
         <div class="card-body p-0">
-        <table class="table">
+        <table class="table table-bordered table-striped table-hover">
             <tr>
                 <th>No</th>
                 <th>Nama</th>
