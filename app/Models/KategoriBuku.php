@@ -9,4 +9,5 @@ class KategoriBuku extends Model
 {
     protected $table = 'kategoribuku';
     protected $primaryKey = 'kategoriid';
+    protected $fillable = ['namakategori'];
 }

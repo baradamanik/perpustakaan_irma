@@ -27,51 +27,58 @@ class Menu extends Component
      * @return \Illuminate\Contracts\View\View|\Closure|string
      */
     public function render()
-    {
-        $list = $this->list();
-        return view('components.menu', ['list' => $list, 
-                                        'active' => $this->active]);
-    }
-    public function list(){
-        return[
-            [
-                'label' => 'Dashboard',
-                'route' => 'dashboard',
-                'icon'  => 'fa-solid fa-house-chimney'
-            ],
-            //[
-              //  'label' => 'Movie',
-                //'route' => 'dashboard.movies',
-                //'icon'  => 'fa-solid fa-users-viewfinder'
-            //],
-            [
-                'label' => 'Buku',
-                'route' => 'dashboard.books',
-                'icon'  => 'fa-solid fa-book-bookmark'
-            ],
-            [
-                'label' => 'Kategori Buku',
-                'route' => 'dashboard.kategoribuku',
-                'icon'  => 'fa-solid fa-book-bookmark'
-            ],
-            [
-                'label' => 'Peminjaman',
-                'route' => 'dashboard.peminjaman',
-                'icon'  => 'fa-solid fa-handshake-simple'
-            ],
-            [
-                'label' => 'Pengembalian',
-                'route' => 'dashboard.pengembalian',
-                'icon'  => 'fa-solid fa-hand-holding-hand'
-            ],
-            [
-                'label' => 'Users',
-                'route' => 'dashboard.users',
-                'icon'  => 'fa-solid fa-users-line'
+{
+    $list = $this->list();
+    return view('components.menu', ['list' => $list, 'active' => $this->active]);
+}
+
+public function list()
+{
+    return [
+        [
+            'label' => 'Dashboard',
+            'route' => 'dashboard',
+            'icon'  => 'fa-solid fa-house-chimney'
+        ],
+        [
+            'label' => 'Manajemen Buku',
+            'icon'  => 'fa-solid fa-book-bookmark',
+            'children' => [
+                [
+                    'label' => 'Buku',
+                    'route' => 'dashboard.books',
+                    'icon'  => 'fa-solid fa-book-bookmark'
+                ],
+                [
+                    'label' => 'Kategori Buku',
+                    'route' => 'dashboard.kategoribuku',
+                    'icon'  => 'fa-solid fa-book-bookmark'
+                ],
+                [
+                    'label' => 'Kategori Buku Relasi',
+                    'route' => 'dashboard.kategoribukurelasi',
+                    'icon'  => 'fa-solid fa-users-viewfinder'
+                ],
             ]
-         ];
-    }
-    public function isActive($label){
+        ],
+        [
+            'label' => 'Peminjaman',
+            'route' => 'dashboard.peminjaman',
+            'icon'  => 'fa-solid fa-handshake-simple'
+        ],
+        [
+            'label' => 'Pengembalian',
+            'route' => 'dashboard.pengembalian',
+            'icon'  => 'fa-solid fa-hand-holding-hand'
+        ],
+        [
+            'label' => 'Users',
+            'route' => 'dashboard.users',
+            'icon'  => 'fa-solid fa-users-line'
+        ]
+     ];
+}
+   public function isActive($label){
         return $label === $this->active;
     }
 }
