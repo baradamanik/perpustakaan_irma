@@ -51,10 +51,10 @@ Route::delete('/dashboard/books/{bukubuku}', [App\Http\Controllers\dashboard\Buk
 //kategoribuku
 Route::get('/dashboard/kategoribuku', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'index'])->name('dashboard.kategoribuku');
 Route::get('/dashboard/kategoribuku/create', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'create'])->name('dashboard.kategoribuku.create');
-Route::get('/dashboard/kategoribuku/edit/{bukubuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'edit'])->name('dashboard.kategoribuku.edit');
-Route::put('/dashboard/kategoribuku/edit/{bukubuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'update'])->name('dashboard.kategoribuku.update');
+Route::get('/dashboard/kategoribuku/edit/{kategoriBuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'edit'])->name('dashboard.kategoribuku.edit');
+Route::put('/dashboard/kategoribuku/edit/{kategoriBuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'update'])->name('dashboard.kategoribuku.update');
 Route::post('/dashboard/kategoribuku', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'store'])->name('dashboard.kategoribuku.store');
-Route::delete('/dashboard/kategoribuku/{bukubuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'destroy'])->name('dashboard.kategoribuku.delete');
+Route::delete('/dashboard/kategoribuku/{kategoriBuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'destroy'])->name('dashboard.kategoribuku.delete');
 
 //baca
 Route::get('/dashboard/books/{buku}/baca', 'App\Http\Controllers\dashboard\BukuController@baca')->name('dashboard.books.baca');

@@ -44,13 +44,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($kategori as $kategoribuku)
+                        @foreach ($kategori as $kategoriBuku)
                            <tr>
                             <td>{{ ($kategori->currentPage() -1 ) * $kategori->perPage() + $loop->iteration }}</td>
                                <td>
-                                    <br>{{ $kategoribuku->namakategori }}
+                                    <br>{{ $kategoriBuku->namakategori }}
                                 </td>
-                                <td><a href="{{ route('dashboard.kategoribuku.edit', $kategoribuku->kategoriid) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a></td>
+                                <td><a href="{{ route('dashboard.kategoribuku.edit', $kategoriBuku->kategoriid) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a></td>
         
                             </tr>
                         @endforeach

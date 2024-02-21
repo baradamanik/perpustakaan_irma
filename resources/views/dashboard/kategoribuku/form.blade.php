@@ -17,16 +17,14 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form method="post" action="{{ route($url, $kategori->kategoriid ?? '') }}" enctype="multipart/form-data">
-                        @csrf
-                        @if(isset($buku))
+                    <form method="post" action="{{ route($url, $kategoriBuku->kategoriid ?? '') }}" enctype="multipart/form-data">
+                    @csrf
+                        @if(isset($kategoriBuku))
                             @method('put')
                         @endif
-                        
-
                         <div class="form-group">
-                            <label for="namakategori">Nama Kategori</label>
-                            <input type="text" class="form-control @error('namakategori') {{'is-invalid'}} @enderror" name="namakategori" value="{{old('namakategori') ?? $kategori->namakategori ?? ''}}">
+                            <label for="namakategori">Kategori Buku</label>
+                            <input type="text" class="form-control @error('namakategori') {{'is-invalid'}} @enderror" name="namakategori" value="{{old('namakategori') ?? $kategoriBuku->namakategori ?? ''}}">
                             @error('namakategori')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -41,7 +39,7 @@
             </div>
         </div>
     </div>
-    @if(isset($kategori))
+    @if(isset($kategoriBuku))
             <div class="modal fade" id="deleteModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -51,11 +49,11 @@
                     </div>
                 
                     <div class="modal-body">
-                        <p>Anda yakin ingin menghapus buku {{$kategori->namakategori}}</p>
+                        <p>Anda yakin ingin menghapus buku {{$kategoriBuku->namakategori}}</p>
                     </div>
 
                     <div class="modal-footer">
-                        <form action="{{ route('dashboard.kategoribuku.delete', $kategori->kategoriid) }}" method="post">
+                        <form action="{{ route('dashboard.kategoribuku.delete', $kategoriBuku->kategoriid) }}" method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>

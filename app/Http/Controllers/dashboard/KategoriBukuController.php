@@ -19,7 +19,7 @@ class KategoriBukuController extends Controller
     {
         $q = $request->input('q');
 
-        $active = 'KategoriBuku';
+        $active = 'Kategori Buku';
 
         $kategori = $kategori->when($q, function($query) use ($q) {
                     return $query->where('namakategori', 'like', '%' .$q. '%');
@@ -40,7 +40,7 @@ class KategoriBukuController extends Controller
      */
     public function create()
     {
-        $active = 'KategoriBuku';
+        $active = 'Kategori Buku';
         return view('dashboard/kategoribuku/form', [
             'active' => $active,
             'button' =>'Create',
@@ -95,7 +95,13 @@ class KategoriBukuController extends Controller
      */
     public function edit(KategoriBuku $kategoriBuku)
     {
-        //
+        $active = 'Kategori Buku';
+        return view('dashboard/kategoribuku/form', [
+            'active'        => $active,
+            'kategoriBuku'  => $kategoriBuku,
+            'button'        =>'Update',        
+            'url'           =>'dashboard.kategoribuku.update'
+        ]);
     }
 
     /**
@@ -107,7 +113,23 @@ class KategoriBukuController extends Controller
      */
     public function update(Request $request, KategoriBuku $kategoriBuku)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'namakategori'         => 'required|unique:App\Models\KategoriBuku,namakategori,'.$kategoriBuku->kategoriid
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->route('dashboard.kategoribuku.update', $kategoriBuku->kategoriid)
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            $kategoriBuku->namakategori = $request->input('namakategori');
+            $kategoriBuku->save();
+
+            return redirect()
+                        ->route('dashboard.kategoribuku')
+                        ->with('message', __('message.update', ['namakategori'=>$request->input('namakategori')]));
+        }
     }
 
     /**
@@ -118,6 +140,11 @@ class KategoriBukuController extends Controller
      */
     public function destroy(KategoriBuku $kategoriBuku)
     {
-        //
+        $namakategori = $kategoriBuku->namakategori;
+
+        $kategoriBuku->delete();
+        return redirect()
+                ->route('dashboard.kategoribuku')
+                ->with('message', __('message.delete', ['namakategori' => $namakategori]));
     }
 }
