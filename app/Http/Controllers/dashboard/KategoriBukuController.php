@@ -5,6 +5,8 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\KategoriBuku;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Response;
 
 class KategoriBukuController extends Controller
 {
@@ -38,7 +40,12 @@ class KategoriBukuController extends Controller
      */
     public function create()
     {
-        //
+        $active = 'KategoriBuku';
+        return view('dashboard/kategoribuku/form', [
+            'active' => $active,
+            'button' =>'Create',
+            'url'    =>'dashboard.kategoribuku.store'
+        ]);
     }
 
     /**
@@ -49,7 +56,24 @@ class KategoriBukuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'namakategori'  => 'required',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()
+                ->route('dashboard.kategoribuku.create')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            $kategori = new KategoriBuku(); //Tambahkan ini untuk membuat objek Buku    
+            $kategori->namakategori = $request->input('namakategori');
+            $kategori->save();
+    
+            return redirect()
+                ->route('dashboard.kategoribuku')
+                ->with('message', __('message.store', ['namakategori'=>$request->input('namakategori')]));
+        }
     }
 
     /**
