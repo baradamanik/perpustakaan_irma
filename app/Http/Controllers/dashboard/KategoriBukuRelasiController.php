@@ -63,7 +63,7 @@ class KategoriBukuRelasiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'bukuid'         => 'required',
+            'bukuid'         => 'required|unique:App\Models\KategoriBukuRelasi,Bukuid',
             'kategoriid'   => 'required',
         ]);
     
@@ -126,7 +126,7 @@ class KategoriBukuRelasiController extends Controller
     public function update(Request $request, KategoriBukuRelasi $kategoriBukuRelasi)
     {
         $validator = Validator::make($request->all(), [
-            'bukuid'         => 'required',
+            'bukuid'         => 'required|unique:App\Models\KategoriBukuRelasi,bukuid,'.$kategoriBukuRelasi->kategoribukuid,
             'kategoriid'   => 'required'
         ]);
 
