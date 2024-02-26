@@ -64,11 +64,6 @@ public function list()
         [
             'label' => 'Peminjaman',
             'route' => 'dashboard.peminjaman',
-            'icon'  => 'fa-solid fa-handshake-simple'
-        ],
-        [
-            'label' => 'Pengembalian',
-            'route' => 'dashboard.pengembalian',
             'icon'  => 'fa-solid fa-hand-holding-hand'
         ],
         [

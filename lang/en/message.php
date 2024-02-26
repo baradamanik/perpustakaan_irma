@@ -15,6 +15,11 @@ return [
     //kategoribukurelasi
     'store' => 'Penambahan Data Kategori Relasi berhasil',
     'update' => 'Pergantian Data Kategori Relasi berhasil',
-    'delete' => 'Penghapusan Data Kategori Relasi berhasil'
+    'delete' => 'Penghapusan Data Kategori Relasi berhasil',
+
+      //peminjaman
+      'store' => 'Penambahan Data Peminjaman berhasil',
+      'update' => 'Pergantian Status Peminjaman berhasil',
+      'delete' => 'Penghapusan Data Peminjaman berhasil'
     
 ];

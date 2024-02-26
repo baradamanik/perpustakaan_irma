@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="mb-2">
-        <a href="{{route('dashboard.kategoribukurelasi.create')}}" class="btn btn-primary">+ Peminjaman</a>
+        <a href="{{route('dashboard.peminjaman.create')}}" class="btn btn-primary">+ Peminjaman</a>
     </div>
 
     @if(session()->has('message'))
@@ -70,7 +70,7 @@
                                     {{ $pinjam->denda }}
                                 </td>
                                 
-                                <td><a href="{{ route('dashboard.peminjaman.edit', $pinjam->peminjamanid) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a></td>
+                                <td><a href="{{ route('dashboard.peminjaman.edit', $pinjam->peminjamanid) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i> Ubah Status Pinjam</a></td>
                             </tr>
                         @endforeach
                     </tbody>

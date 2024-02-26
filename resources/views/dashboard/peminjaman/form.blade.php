@@ -5,7 +5,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-8 align-self-center">
-                    <h3>Kategori Buku Relasi</h3>
+                    <h3>Peminjaman</h3>
                 </div>
                 <div class="col-4 text-right">
                 <button class="btn btn-sm text-secondary" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="fas fa-trash"></i></button>
@@ -17,33 +17,59 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form method="post" action="{{ route($url, $kategoriBukuRelasi->kategoribukuid ?? '') }}">
+                    <form method="post" action="{{ route($url, $pinjam->peminjamanid ?? '') }}">
                         @csrf
-                        @if(isset($kategoriBukuRelasi))
+                        @if(isset($pinjam))
                             @method('put')
                         @endif
                         <div class="form-group">
-                            <label for="bukuid">Buku</label>
+                            <label for="bukuid">Member</label>
+                            <select class="form-control @error('id') {{'is-invalid'}} @enderror" name="id">
+                                <option value="">Pilih Member</option>
+                                @foreach ($user as $member)
+                                    <option value="{{ $member->id }}" {{ (old('id') ?? $pinjam->id ?? '') == $member->id ? 'selected' : '' }}>{{ $member->name }}</option>
+                                @endforeach
+                            </select>
+                            @error('id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group">
+                            <label for="buku">Buku</label>
                             <select class="form-control @error('bukuid') {{'is-invalid'}} @enderror" name="bukuid">
                                 <option value="">Pilih Buku</option>
                                 @foreach ($bukubuku as $buku)
-                                    <option value="{{ $buku->bukuid }}" {{ (old('bukuid') ?? $kategoriBukuRelasi->bukuid ?? '') == $buku->bukuid ? 'selected' : '' }}>{{ $buku->title }}</option>
+                                    <option value="{{ $buku->bukuid }}" {{ (old('bukuid') ?? $pinjam->bukuid ?? '') == $buku->bukuid ? 'selected' : '' }}>{{ $buku->title }}</option>
                                 @endforeach
                             </select>
                             @error('bukuid')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
                         <div class="form-group">
-                            <label for="kategoriid">Kategori</label>
-                            <select class="form-control @error('kategoriid') {{'is-invalid'}} @enderror" name="kategoriid">
-                                <option value="">Pilih Kategori</option>
-                                @foreach ($kategoriBuku as $kategori)
-                                    <option value="{{ $kategori->kategoriid }}" {{ (old('kategoriid') ?? $kategoriBukuRelasi->kategoriid ?? '') == $kategori->kategoriid ? 'selected' : '' }}>{{ $kategori->namakategori }}</option>
-                                @endforeach
-                            </select>
-                            @error('kategoriid')
+                            <label for="tanggalpeminjaman">Tanggal Peminjaman</label>
+                            <input type="date" class="form-control" name="tanggalpeminjaman" value="{{ old('tanggal_peminjaman') ?? ($pinjam->tanggalpeminjaman ?? '') }}">
+                            @error('tanggalpeminjaman')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggalpengembalian">Tanggal Pengembalian</label>
+                            <input type="date" class="form-control" name="tanggalpengembalian" value="{{ old('tanggalpengembalian') ?? ($pinjam->tanggalpengembalian ?? '') }}">
+                            @error('tanggalpengembalian')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                        <label for="status_peminjaman">Status Pengembalian</label>
+                        <select class="form-control" name="status_peminjaman">
+                            <option value="Belum Dikembalikan">Belum Dikembalikan</option>
+                            <option value="Belum Dikembalikan" {{ (old('status_peminjaman') ?? ($pinjam->status_peminjaman ?? '')) == "Belum Dikembalikan" ? 'selected' : '' }}>Belum Dikembalikan</option>
+                            <option value="Sudah Dikembalikan" {{ (old('status_peminjaman') ?? ($pinjam->status_peminjaman ?? '')) == "Sudah Dikembalikan" ? 'selected' : '' }}>Sudah Dikembalikan</option>
+                            <!-- Tambahkan opsi lainnya sesuai kebutuhan -->
+                        </select>
+                        @error('status_peminjaman')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
@@ -57,7 +83,7 @@
             </div>
         </div>
     </div>
-    @if(isset($kategoriBukuRelasi))
+    @if(isset($pinjam))
             <div class="modal fade" id="deleteModal">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -67,11 +93,11 @@
                     </div>
                 
                     <div class="modal-body">
-                        <p>Anda yakin ingin menghapus kategori buku ini?</p>
+                        <p>Anda yakin ingin menghapus data peminjaman dari member ini?</p>
                     </div>
 
                     <div class="modal-footer">
-                        <form action="{{ route('dashboard.kategoribukurelasi.delete', $kategoriBukuRelasi->kategoribukuid) }}" method="post">
+                        <form action="{{ route('dashboard.peminjaman.delete', $pinjam->peminjamanid) }}" method="post">
                             @csrf
                             @method('delete')
                             <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -81,5 +107,4 @@
             </div>
     @endif
 </div>
-
 @endsection

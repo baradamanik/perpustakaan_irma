@@ -48,7 +48,7 @@
 
                         <div class="form-group">
                             <label for="tahun_terbit">Tahun_terbit</label>
-                            <input type="text" class="form-control @error('tahun_terbit') {{'is-invalid'}} @enderror" name="tahun_terbit" value="{{old('tahun_terbit') ?? $buku->tahun_terbit ?? ''}}">
+                            <input type="date" class="form-control @error('tahun_terbit') {{'is-invalid'}} @enderror" name="tahun_terbit" value="{{old('tahun_terbit') ?? $buku->tahun_terbit ?? ''}}">
                             @error('tahun_terbit')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
