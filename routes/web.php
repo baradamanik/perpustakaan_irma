@@ -27,18 +27,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/dashboard', [App\Http\Controllers\dashboard\DashboardController::class, 'index'])->name('dashboard');
 
 //users
-Route::get('/dashboard/users', [App\Http\Controllers\dashboard\UserController::class, 'index'])->name('dashboard');
-Route::get('/dashboard/user/edit/{id}', [App\Http\Controllers\dashboard\UserController::class, 'edit'])->name('home');
-Route::post('/dashboard/user/update/{id}', [App\Http\Controllers\dashboard\UserController::class, 'update'])->name('home');
-Route::delete('/dashboard/user/delete/{id}', [App\Http\Controllers\dashboard\UserController::class, 'destroy'])->name('home');
+Route::get('/dashboard/users', [App\Http\Controllers\dashboard\UserController::class, 'index'])->name('dashboard.user');
+Route::get('/dashboard/user/create', [App\Http\Controllers\dashboard\UserController::class, 'create'])->name('dashboard.user.create');
+Route::post('/dashboard/user', [App\Http\Controllers\dashboard\UserController::class, 'store'])->name('dashboard.user.store');
+Route::get('/dashboard/user/edit/{user}', [App\Http\Controllers\dashboard\UserController::class, 'edit'])->name('dashboard.user.edit');
+Route::put('/dashboard/user/edit/{user}', [App\Http\Controllers\dashboard\UserController::class, 'update'])->name('dashboard.user.update');
+Route::delete('/dashboard/user/delete/{user}', [App\Http\Controllers\dashboard\UserController::class, 'destroy'])->name('dashboard.user.delete');
 
-//menu
-Route::get('/dashboard', [App\Http\Controllers\dashboard\DashboardController::class, 'index'])->name('dashboard');
-Route::get('/dashboard/movies', [App\Http\Controllers\dashboard\MovieController::class, 'index'])->name('dashboard.movies');
-Route::get('/dashboard/books', [App\Http\Controllers\dashboard\BukuController::class, 'index'])->name('dashboard.books');
-Route::get('/dashboard/peminjaman', [App\Http\Controllers\dashboard\PeminjamanController::class, 'index'])->name('dashboard.peminjaman');
-Route::get('/dashboard/pengembalian', [App\Http\Controllers\dashboard\PengembalianController::class, 'index'])->name('dashboard.pengembalian');
-Route::get('/dashboard/users', [App\Http\Controllers\dashboard\UserController::class, 'index'])->name('dashboard.users');
+
 
 //buku
 Route::get('/dashboard/books', [App\Http\Controllers\dashboard\BukuController::class, 'index'])->name('dashboard.books');
@@ -75,14 +71,6 @@ Route::delete('/dashboard/koleksipribadi/{koleksipribadi}', [App\Http\Controller
 
 //baca
 Route::get('/dashboard/books/{buku}/baca', [App\Http\Controllers\dashboard\BukuController::class,'baca'])->name('dashboard.books.baca');
-
-//movie
-Route::get('/dashboard/movies', [App\Http\Controllers\dashboard\MovieController::class, 'index'])->name('dashboard.movies');
-Route::get('/dashboard/movies/create', [App\Http\Controllers\dashboard\MovieController::class, 'create'])->name('dashboard.movies.create');
-Route::get('/dashboard/movies/edit/{movie}', [App\Http\Controllers\dashboard\MovieController::class, 'edit'])->name('dashboard.movies.edit');
-Route::put('/dashboard/movies/edit/{movie}', [App\Http\Controllers\dashboard\MovieController::class, 'update'])->name('dashboard.movies.update');
-Route::post('/dashboard/movies', [App\Http\Controllers\dashboard\MovieController::class, 'store'])->name('dashboard.movies.store');
-Route::delete('/dashboard/movies/{movie}', [App\Http\Controllers\dashboard\MovieController::class, 'destroy'])->name('dashboard.movies.delete');
 
 //peminjaman
 Route::get('/dashboard/peminjaman', [App\Http\Controllers\dashboard\PeminjamanController::class, 'index'])->name('dashboard.peminjaman');

@@ -43,7 +43,14 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $active = 'User';
+        $users = User::all();
+        return view('dashboard/user/form', [
+            'users' => $users,
+            'active' => $active,
+            'button' =>'Create',
+            'url'    =>'dashboard.user.store'
+        ]);
     }
 
     /**
@@ -54,7 +61,39 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' =>'required',
+            'email' =>'required',
+            'alamat' =>'required',
+            'password' => 'required|min:8', // Tambahkan validasi untuk password baru
+            'password_confirmation' => 'same:password', // Pastikan konfirmasi password sama dengan password
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()
+                ->route('dashboard.user.create')
+                ->withErrors($validator)
+                ->withInput();
+        } else {
+            //Simpan data User
+            $user = new User(); //Tambahkan ini untuk membuat objek User
+            $user->name = $request->input('name');
+            $user->email = $request->input('email');
+            $user->alamat = $request->input('alamat');
+
+        // Menginput password jika ada input baru
+        if ($request->has('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        // Menyimpan
+        $user->save();
+        
+        $messageKey = 'user.store';
+        return redirect()
+            ->route('dashboard.user')
+            ->with('message', __('message.user.store', ['name' => $request->input('name')]));
+        }
     }
 
     /**
@@ -74,12 +113,15 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
-        $user = USER::find($id);
-        $active='Users';
-        return view('dashboard/user/form', ['user' => $user, 'active' => $active]);
+        $active = 'Users';
+        return view('dashboard/user/form', [
+            'active' => $active,
+            'user'   => $user,
+            'button' =>'Update',        
+            'url'    =>'dashboard.user.update'
+        ]);
     }
 
     /**
@@ -89,22 +131,20 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        // Menemukan user berdasarkan ID
-    $user = USER::find($id);
-
+    public function update(Request $request, User $user)
+{
     // Validasi input
-    $validator = VALIDATOR::make($request->all(), [
+    $validator = Validator::make($request->all(), [
         'name' =>'required',
         'email' =>'required',
-        'alamat' =>'required|unique:App\Models\User,alamat,'.$id,
+        'alamat' =>'required',
         'password' => 'nullable|min:8', // Tambahkan validasi untuk password baru
+        'password_confirmation' => 'same:password', // Pastikan konfirmasi password sama dengan password
     ]);
 
     // Jika validasi gagal
     if($validator->fails()){
-        return redirect('dashboard/user/edit/'.$id)
+        return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
     } else {
@@ -121,10 +161,14 @@ class UserController extends Controller
         // Menyimpan perubahan
         $user->save();
         
-        // Redirect ke halaman user setelah update
-        return redirect('dashboard/users');
+        $messageKey = 'user.update';
+        return redirect()
+            ->route('dashboard.user')
+            ->with('message', __('message.user.update', ['name' => $request->input('name')]));
+
     }
-    }
+}
+
 
     /**
      * Remove the specified resource from storage.
@@ -132,11 +176,14 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = USER::find($id);
+        $name = $user->name;
         $user->delete();
-        return redirect('dashboard/users');
+        $messageKey = 'user.delete';
+        return redirect()
+                ->route('dashboard.user')
+                ->with('message', __('message.user.delete', ['name' => $name]));
         //
     }
 }

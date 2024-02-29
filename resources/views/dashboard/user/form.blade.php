@@ -17,25 +17,29 @@
         <div class="card-body p-2">
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <form method="post" action="{{ url('dashboard/user/update/'. $user->id) }}">
-                        @csrf
+                    <form method="post" action="{{ route($url, $user->id ?? '') }}">
+                    @csrf
+                        @if(isset($user))
+                            @method('put')
+                        @endif
                         <div class="form-group">
-                            <label for="name">Nama</label>
-                            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" class="form-control @error('name') {{'is-invalid'}} @enderror" name="name" value="{{old('name') ?? $user->name ?? ''}}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" name="email" value="{{ old($user->email) ?? $user->email }}">
+                            <input type="email" class="form-control @error('email') {{'is-invalid'}} @enderror" name="email" value="{{old('email') ?? $user->email ?? ''}}">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        
+                       <div class="form-group">
                             <label for="alamat">Alamat</label>
-                            <input type="text" class="form-control" name="alamat" value="{{ old($user->alamat) ?? $user->alamat }}">
+                            <input type="text" class="form-control @error('alamat') {{'is-invalid'}} @enderror" name="alamat" value="{{old('alamat') ?? $user->alamat ?? ''}}">
                             @error('alamat')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -44,7 +48,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -58,41 +62,48 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" autocomplete="new-password">
+                                @error('password_confirmation')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
 
                         <div class="form-group mt-4">
                             <button type="button" onclick="window.history.back()" class="btn btn-sm btn-secondary button-spacing">Cancel</button>
-                            <button type="submit" class="btn btn-success btn-sm">Update</button>
+                            <button type="submit" class="btn btn-success btn-sm">{{$button}}</button>
                         </div>
+
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    @if(isset($user))
+            <div class="modal fade" id="deleteModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-email">Delete</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                
+                    <div class="modal-body">
+                        <p>Anda yakin ingin menghapus user {{$user->name}}</p>
+                    </div>
 
-    <div class="modal fade" id="deleteModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <div class="modal-title">
-                        <h5>Delete</h5>
+                    <div class="modal-footer">
+                        <form action="{{ route('dashboard.user.delete', $user->id) }}" method="post">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                        </form>
                     </div>
                 </div>
-                
-                <div class="modal-body">
-                    <p>Anda yakin ingin menghapus user {{ $user->name }}</p>
-                </div>
-
-                <div class="modal-footer">
-                    <form action="{{ url('dashboard/user/delete/'.$user->id) }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                    </form>
-                </div>
             </div>
-        </div>
-    </div>
+    @endif
+</div>
+
 @endsection

@@ -68,7 +68,7 @@ public function list()
         ],
         [
             'label' => 'Users',
-            'route' => 'dashboard.users',
+            'route' => 'dashboard.user',
             'icon'  => 'fa-solid fa-users-line'
         ]
      ];
