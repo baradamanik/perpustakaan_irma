@@ -29,7 +29,18 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        <div class="form-group">
+                            <label for="kategoriid">Kategori</label>
+                            <select class="form-control @error('kategoriid') {{'is-invalid'}} @enderror" name="kategoriid">
+                                <option value="">Pilih Kategori</option>
+                                @foreach ($kategoriBuku as $kategori)
+                                    <option value="{{ $kategori->kategoriid }}" {{ (old('kategoriid') ?? $buku->kategoriid ?? '') == $kategori->kategoriid ? 'selected' : '' }}>{{ $kategori->namakategori }}</option>
+                                @endforeach
+                            </select>
+                            @error('kategoriid')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="penulis">Penulis</label>
                             <input type="text" class="form-control @error('penulis') {{'is-invalid'}} @enderror" name="penulis" value="{{old('penulis') ?? $buku->penulis ?? ''}}">

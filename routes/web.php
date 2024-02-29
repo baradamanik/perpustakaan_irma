@@ -64,8 +64,17 @@ Route::put('/dashboard/kategoribukurelasi/edit/{kategoriBukuRelasi}', [App\Http\
 Route::post('/dashboard/kategoribukurelasi', [App\Http\Controllers\dashboard\KategoriBukuRelasiController::class, 'store'])->name('dashboard.kategoribukurelasi.store');
 Route::delete('/dashboard/kategoribukurelasi/{kategoriBukuRelasi}', [App\Http\Controllers\dashboard\KategoriBukuRelasiController::class, 'destroy'])->name('dashboard.kategoribukurelasi.delete');
 
+//koleksipribadi
+Route::get('/dashboard/koleksipribadi', [App\Http\Controllers\dashboard\KoleksiPribadiController::class, 'index'])->name('dashboard.koleksipribadi');
+Route::get('/dashboard/koleksipribadi/create', [App\Http\Controllers\dashboard\KoleksiPribadiController::class, 'create'])->name('dashboard.koleksipribadi.create');
+Route::get('/dashboard/koleksipribadi/edit/{koleksipribadi}', [App\Http\Controllers\dashboard\KoleksiPribadiController::class, 'edit'])->name('dashboard.koleksipribadi.edit');
+Route::put('/dashboard/koleksipribadi/edit/{koleksipribadi}', [App\Http\Controllers\dashboard\KoleksiPribadiController::class, 'update'])->name('dashboard.koleksipribadi.update');
+Route::post('/dashboard/koleksipribadi', [App\Http\Controllers\dashboard\KoleksiPribadiController::class, 'store'])->name('dashboard.koleksipribadi.store');
+Route::delete('/dashboard/koleksipribadi/{koleksipribadi}', [App\Http\Controllers\dashboard\KoleksiPribadiController::class, 'destroy'])->name('dashboard.koleksipribadi.delete');
+
+
 //baca
-Route::get('/dashboard/books/{buku}/baca', 'App\Http\Controllers\dashboard\BukuController@baca')->name('dashboard.books.baca');
+Route::get('/dashboard/books/{buku}/baca', [App\Http\Controllers\dashboard\BukuController::class,'baca'])->name('dashboard.books.baca');
 
 //movie
 Route::get('/dashboard/movies', [App\Http\Controllers\dashboard\MovieController::class, 'index'])->name('dashboard.movies');

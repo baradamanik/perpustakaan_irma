@@ -54,6 +54,7 @@
                                 </td>
                                 <td>
                                     <h4><strong>{{ $buku->title }}</strong></h4>------------------------------
+                                    <br>Kategori    : {{ $buku->kategoriBuku->namakategori }}
                                     <br>Penulis     : {{ $buku->penulis }}
                                     <br>Tahun terbit: {{ $buku->tahun_terbit }}
                                     <br>Penerbit    : {{ $buku->penulis }}

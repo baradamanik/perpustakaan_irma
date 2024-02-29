@@ -17,12 +17,16 @@ return new class extends Migration
             $table->id('bukuid');
             $table->string('title', 250);
             $table->string('thumbnail', 250);
+            $table->unsignedBigInteger('kategoriid');
             $table->longText('description', 250);
             $table->string('penulis');
             $table->string('penerbit');
-            $table->integer('tahun_terbit');
+            $table->date('tahun_terbit');
             $table->softDeletes('deleted_at');
             $table->timestamps();
+
+            //Menambahkan foreign key ke table 'bukubuku'
+            $table->foreign('kategoriid')->references('kategoriid')->on('kategoribuku')->onDelete('cascade');
         });
     }
 
