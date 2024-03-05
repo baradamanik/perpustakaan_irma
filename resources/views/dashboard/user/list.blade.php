@@ -39,6 +39,7 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Alamat</th>
+                <th>Hak Akses</th>
                 <th>Regitered</th>
                 <th>Edited</th>
                 <th>&nbsp</th>
@@ -49,6 +50,17 @@
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->alamat}}</td>
+                <td>
+                    @if($user->level == 1)
+                    Administrator
+                    @elseif($user->level == 2)
+                        Petugas
+                    @elseif($user->level == 3)
+                        Peminjam
+                    @else
+                        Undefined
+                    @endif
+                </td>
                 <td>{{$user->created_at}}</td>
                 <td>{{$user->updated_at}}</td>
                 <td><a href="{{ route('dashboard.user.edit', $user->id) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i></a></td>

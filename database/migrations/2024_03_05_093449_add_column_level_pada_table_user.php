@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('bukubuku', function(blueprint $table){
-            $table->string('pdf');
+        Schema::table('users', function(blueprint $table){
+            $table->string('level');
         });
     }
 
@@ -26,9 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        //
-        Schema::table('bukubuku', function(blueprint $table){
-            $table->dropColumn('pdf');
+        Schema::table('users', function(blueprint $table){
+            $table->dropColumn('level');
         });
     }
 };

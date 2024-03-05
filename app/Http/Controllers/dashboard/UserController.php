@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use Illuminate\Validation\Rule;
+
 
 class UserController extends Controller
 {
@@ -65,6 +67,7 @@ class UserController extends Controller
             'name' =>'required',
             'email' =>'required',
             'alamat' =>'required',
+            'level' => ['required', Rule::in(['1', '2', '3'])],
             'password' => 'required|min:8', // Tambahkan validasi untuk password baru
             'password_confirmation' => 'same:password', // Pastikan konfirmasi password sama dengan password
         ]);
@@ -80,6 +83,7 @@ class UserController extends Controller
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->alamat = $request->input('alamat');
+            $user->level = $request->input('level');
 
         // Menginput password jika ada input baru
         if ($request->has('password')) {
@@ -138,6 +142,7 @@ class UserController extends Controller
         'name' =>'required',
         'email' =>'required',
         'alamat' =>'required',
+        'level' => ['required', Rule::in(['1', '2', '3'])],
         'password' => 'nullable|min:8', // Tambahkan validasi untuk password baru
         'password_confirmation' => 'same:password', // Pastikan konfirmasi password sama dengan password
     ]);
@@ -152,6 +157,7 @@ class UserController extends Controller
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->alamat = $request->input('alamat');
+        $user->level = $request->input('level');
 
         // Mengupdate password jika ada input baru
         if ($request->has('password')) {

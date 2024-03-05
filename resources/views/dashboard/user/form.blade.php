@@ -44,6 +44,17 @@
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label for="level">Hak akses</label><br>
+                            <input type="radio" id="administrator" name="level" value="1" {{ isset($user) && $user->level == 1 ? 'checked' : '' }}>
+                            <label for="administrator">Administrator</label>&nbsp; &nbsp;
+                            <input type="radio" id="petugas" name="level" value="2" {{ isset($user) && $user->level == 2 ? 'checked' : '' }}>
+                            <label for="petugas">Petugas</label>&nbsp; &nbsp;
+                            <input type="radio" id="peminjam" name="level" value="3" {{ isset($user) && $user->level == 3 ? 'checked' : '' }}>
+                            <label for="peminjam">Peminjam</label><br>
+                        </div>
+
+
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
