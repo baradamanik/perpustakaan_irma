@@ -33,6 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/dashboard/books/edit/{bukubuku}', [App\Http\Controllers\dashboard\BukuController::class, 'update'])->name('dashboard.books.update');
     Route::post('/dashboard/books', [App\Http\Controllers\dashboard\BukuController::class, 'store'])->name('dashboard.books.store');
     Route::delete('/dashboard/books/{bukubuku}', [App\Http\Controllers\dashboard\BukuController::class, 'destroy'])->name('dashboard.books.delete');
+    Route::get('/generate-pdf', [App\Http\Controllers\dashboard\PdfBukuController::class, 'generatePdf'])->name('generate.pdf');
 
     // Kategori Buku
     Route::get('/dashboard/kategoribuku', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'index'])->name('dashboard.kategoribuku');
@@ -41,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/dashboard/kategoribuku/edit/{kategoriBuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'update'])->name('dashboard.kategoribuku.update');
     Route::post('/dashboard/kategoribuku', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'store'])->name('dashboard.kategoribuku.store');
     Route::delete('/dashboard/kategoribuku/{kategoriBuku}', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'destroy'])->name('dashboard.kategoribuku.delete');
+    
 
     // Kategori Buku Relasi
     Route::get('/dashboard/kategoribukurelasi', [App\Http\Controllers\dashboard\KategoriBukuRelasiController::class, 'index'])->name('dashboard.kategoribukurelasi');

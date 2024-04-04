@@ -4,6 +4,9 @@
     <div class="mb-2">
         <a href="{{route('dashboard.books.create')}}" class="btn btn-primary">+ Buku</a>
     </div>
+    <div class="mb-2">
+    <a href="{{ route('generate.pdf') }}" class="btn btn-primary">Generate Laporan PDF</a>
+    </div>
 
     @if(session()->has('message'))
     <div class="alert alert-success">
