@@ -2,7 +2,9 @@
 
 @section('content')
     <div class="mb-2">
-        <a href="{{route('dashboard.peminjaman.create')}}" class="btn btn-primary">+ Peminjaman</a>
+        @if($level != 3)
+            <a href="{{ route('dashboard.peminjaman.create') }}" class="btn btn-primary">+ Peminjaman</a>
+        @endif
     </div>
 
     @if(session()->has('message'))
@@ -44,33 +46,29 @@
                             <th>Tanggal Peminjaman</th>
                             <th>Tanggal Pengembalian</th>
                             <th>Status Peminjaman</th>
-                            <th>Denda</th>
+                            <th>Aksi</th> <!-- Tambahkan kolom untuk tombol Kembalikan -->
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($peminjaman as $pinjam)
                             <tr>
                                 <td>{{ ($peminjaman->currentPage() -1 ) * $peminjaman->perPage() + $loop->iteration }}</td>
+                                <td>{{ $pinjam->user->name }}</td>
+                                <td>{{ $pinjam->bukuid }} - {{ optional($pinjam->bukubuku)->title }}</td>
+                                <td>{{ $pinjam->tanggalpeminjaman }}</td>
+                                <td>{{ $pinjam->tanggalpengembalian }}</td>
+                                <td>{{ $pinjam->status_peminjaman }}</td>
                                 <td>
-                                    {{ $pinjam->user->name }}
+                                    @if($level != 3)
+                                    <a href="{{ route('dashboard.peminjaman.edit', $pinjam->peminjamanid) }}" class="btn btn-success btn-sm">Edit</a>  &nbsp;
+                                    @endif
+                                    <a href="{{ route('dashboard.ulasanbuku', $pinjam->bukuid) }}" class="btn btn-warning btn-sm">Rate</a>  &nbsp;
+                                    @if($pinjam->status_peminjaman == 'Belum Dikembalikan')
+                                    <a href="{{ route('dashboard.books.baca', $pinjam->bukuid) }}" class="btn btn-success btn-sm" target="_blank">Baca</a>&nbsp;
+                                        <button class="btn btn-warning btn-sm" onclick="return confirmKembalikan({{ $pinjam->peminjamanid }})">Kembalikan</button>
+                                        
+                                    @endif
                                 </td>
-                                <td>
-                                    {{ $pinjam->bukuid }} - {{ optional($pinjam->bukubuku)->title }}
-                                </td>
-                                <td>
-                                    {{ $pinjam->tanggalpeminjaman }}
-                                </td>
-                                <td>
-                                    {{ $pinjam->tanggalpengembalian }}
-                                </td>
-                                <td>
-                                    {{ $pinjam->status_peminjaman }}
-                                </td>
-                                <td>
-                                    {{ $pinjam->denda }}
-                                </td>
-                                
-                                <td><a href="{{ route('dashboard.peminjaman.edit', $pinjam->peminjamanid) }}" class="btn btn-success btn-sm"><i class="fas fa-pen"></i> Ubah Status Pinjam</a></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -82,3 +80,17 @@
         </div>
     </div>
 @endsection
+<script>
+    function confirmKembalikan(id) {
+        // Tampilkan dialog konfirmasi
+        var confirmation = confirm('Apakah Anda yakin akan mengembalikan buku ini?');
+        
+        // Jika pengguna menekan OK
+        if (confirmation) {
+            // Redirect ke rute pengembalian
+            window.location.href = "{{ route('dashboard.peminjaman.kembalikan', ['id' => ':id']) }}".replace(':id', id);
+        }
+    }
+</script>
+
+

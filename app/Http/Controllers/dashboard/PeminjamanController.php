@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\dashboard;
 
-use App\Http\Controllers\Controller;
-use App\Models\Peminjaman;
-use App\Models\Bukubuku;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Carbon\Carbon;  
-use Illuminate\Support\Facades\Validator;
+use App\Models\Bukubuku;
+use App\Models\Peminjaman;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 
 class PeminjamanController extends Controller
@@ -21,25 +22,34 @@ class PeminjamanController extends Controller
      */
     public function index(Request $request, Peminjaman $peminjaman)
     {
-        $q = $request->input('q');
+        // Mendapatkan level akun pengguna saat ini
+    $userLevel = auth()->user()->level; // Ini adalah contoh, sesuaikan dengan struktur data Anda
+    $q = $request->input('q');
+    
+    $user = Auth::user(); // Mendapatkan informasi user yang sedang login
 
-        $active = 'Peminjaman';
+    $active = 'Peminjaman';
 
-                $peminjaman = $peminjaman->when($q, function($query) use ($q) {
-                    return $query->where('id', 'like', '%' .$q. '%')
-                    ->orWhereHas('bukubuku', function($subquery) use ($q) {
-                        $subquery->where('title', 'like', '%' . $q . '%');
-                    });
-                })
-                ->with('bukubuku') // Memuat relasi 'buku'
-
-        
+    $peminjaman = $peminjaman
+        ->when($userLevel != 1 && $userLevel != 2, function ($query) use ($user) {
+            // Menambahkan filter berdasarkan ID user yang sedang login jika bukan level 1 atau 2
+            return $query->where('id', $user->id);
+        })
+        ->when($q, function($query) use ($q) {
+            return $query->where('id', 'like', '%' . $q . '%')
+                ->orWhereHas('bukubuku', function($subquery) use ($q) {
+                    $subquery->where('title', 'like', '%' . $q . '%');
+                });
+        })
+        ->with('bukubuku') // Memuat relasi 'buku'
         ->paginate(10);
-        return view('dashboard/peminjaman/list', [
-            'peminjaman' => $peminjaman,
-            'request' => $request,
-            'active' => $active
-        ]);
+
+    return view('dashboard/peminjaman/list', [
+        'peminjaman' => $peminjaman,
+        'request' => $request,
+        'active' => $active,
+        'level' => $userLevel
+    ]);
     }
 
     /**
@@ -128,6 +138,7 @@ class PeminjamanController extends Controller
             'url'    =>'dashboard.peminjaman.update'
         ]);
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -182,6 +193,24 @@ class PeminjamanController extends Controller
      * @param  \App\Models\Peminjaman  $peminjaman
      * @return \Illuminate\Http\Response
      */
+
+     
+     public function kembalikan($peminjamanid)
+     {
+         $peminjaman = Peminjaman::find($peminjamanid);
+ 
+         if (!$peminjaman) {
+             return redirect()->route('dashboard.peminjaman')->with('error', 'Peminjaman tidak ditemukan.');
+         }
+ 
+         // Lakukan logika pengembalian di sini, misalnya mengubah status peminjaman menjadi "Sudah kembali"
+         $peminjaman->tanggalpengembalian = now();
+         $peminjaman->status_peminjaman = 'Sudah kembali';
+         $peminjaman->save();
+ 
+         return redirect()->route('dashboard.peminjaman')->with('success', 'Peminjaman berhasil dikembalikan.');
+     }
+
     public function destroy(Peminjaman $pinjam)
     {
         $id = $pinjam->id;

@@ -63,6 +63,11 @@ class Menu extends Component
                 ]
             ],
             [
+                'label' => 'Buku',
+                'route' => 'dashboard.bukupeminjam',
+                'icon'  => 'fa-solid fa-hand-holding-hand'
+            ],
+            [
                 'label' => 'Peminjaman',
                 'route' => 'dashboard.peminjaman',
                 'icon'  => 'fa-solid fa-hand-holding-hand'
@@ -83,12 +88,14 @@ class Menu extends Component
         elseif ($user->level == '2') {
             // Misalnya, jika level pengguna adalah level2, maka sembunyikan salah satu submenu di Manajemen Buku
             //unset($menu[1]['children'][2]); // Hapus menu Kategori Buku Relasi
-            unset($menu[3]);
+            unset($menu[2]);
+            unset($menu[4]);
         }
         elseif ($user->level == '3') {
             // Misalnya, jika level pengguna adalah level2, maka sembunyikan salah satu submenu di Manajemen Buku
             unset($menu[1]);
-            unset($menu[3]);
+            unset($menu[4]);
+        
         }
 
         return $menu;

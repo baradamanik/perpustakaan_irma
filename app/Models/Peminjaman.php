@@ -11,7 +11,7 @@ class Peminjaman extends Model
 {
     protected $table = 'peminjaman';
     protected $primaryKey = 'peminjamanid';
-
+    protected $fillable = ['peminjamanid', 'id', 'bukuid', 'tanggalpeminjaman', 'status_peminjaman'];
 
     public function bukubuku()
     {

@@ -35,6 +35,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/dashboard/books/{bukubuku}', [App\Http\Controllers\dashboard\BukuController::class, 'destroy'])->name('dashboard.books.delete');
     Route::get('/generate-pdf', [App\Http\Controllers\dashboard\PdfBukuController::class, 'generatePdf'])->name('generate.pdf');
 
+     // BukuPeminjam
+     Route::get('/dashboard/bukupeminjam', [App\Http\Controllers\dashboard\BukuPeminjamController::class, 'index'])->name('dashboard.bukupeminjam');
+     Route::get('/dashboard/bukupeminjam/{bukuid}', [App\Http\Controllers\dashboard\BukuPeminjamController::class, 'pinjam'])->name('dashboard.bukupeminjam.pinjam');
     // Kategori Buku
     Route::get('/dashboard/kategoribuku', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'index'])->name('dashboard.kategoribuku');
     Route::get('/dashboard/kategoribuku/create', [App\Http\Controllers\dashboard\KategoriBukuController::class, 'create'])->name('dashboard.kategoribuku.create');
@@ -59,6 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/dashboard/peminjaman/edit/{pinjam}', [App\Http\Controllers\dashboard\PeminjamanController::class, 'update'])->name('dashboard.peminjaman.update');
     Route::post('/dashboard/peminjaman', [App\Http\Controllers\dashboard\PeminjamanController::class, 'store'])->name('dashboard.peminjaman.store');
     Route::delete('/dashboard/peminjaman/{pinjam}', [App\Http\Controllers\dashboard\PeminjamanController::class, 'destroy'])->name('dashboard.peminjaman.delete');
+    Route::get('/dashboard/peminjaman/kembalikan/{id}', [App\Http\Controllers\dashboard\PeminjamanController::class, 'kembalikan'])->name('dashboard.peminjaman.kembalikan');
+   
 
 
 
